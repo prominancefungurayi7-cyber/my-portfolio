@@ -274,14 +274,32 @@
       background: var(--accent); margin-left: 3px;
       vertical-align: middle; animation: blink 0.8s infinite;
     }
-    .hero-desc { color: var(--text2); font-size: 1rem; max-width: 520px; margin-bottom: 2.5rem; }
+    .hero-desc {
+  color: var(--text2);
+  font-size: 1.25rem; /* 20px for high-impact hero copy */
+  line-height: 1.7; /* Generates a clean, airy aesthetic */
+  max-width: 58ch; /* Automatically breaks your copy into 3 elegant lines */
+  margin-bottom: 3rem; /* Clean breathing room before your next layout element */
+  letter-spacing: -0.015em; /* Sharpens modern sans-serif typefaces */
+}
+
+/* Optional: Styles key verbs to mimic a premium SaaS product feature */
+.hero-desc .highlight {
+  color: var(--text-primary, #ffffff);
+  font-weight: 600;
+}
+
+
+
     .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3.5rem; }
+
     .btn {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 0.75rem 1.75rem; border-radius: 6px;
       font-family: var(--font-head); font-weight: 600; font-size: 0.88rem;
       text-decoration: none; cursor: pointer; transition: all var(--transition);
       letter-spacing: 0.02em; white-space: nowrap;
+      
     }
     .btn-primary { background: var(--accent); color: var(--bg); border: 2px solid var(--accent); }
     .btn-primary:hover { background: transparent; color: var(--accent); transform: translateY(-2px); }
