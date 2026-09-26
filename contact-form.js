@@ -1,4 +1,4 @@
-// Validate locally, then let the browser open FormSubmit's verification/result page.
+// Validate locally, then let the browser open FormSubmit's result page.
 (() => {
   const form = document.getElementById('contactForm');
   if (!form) return;
@@ -55,7 +55,7 @@
     submitting = true;
     button.disabled = true;
     button.textContent = 'Opening secure form…';
-    // Leave the normal POST intact. FormSubmit handles CAPTCHA and confirmation.
+    // Leave the normal POST intact. FormSubmit handles the submission result.
     // Recover the control if navigation is cancelled without clearing the message.
     resetTimer = setTimeout(resetButton, 15000);
   });
