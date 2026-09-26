@@ -1,9 +1,10 @@
-// Validate locally, then let the browser open FormSubmit's result page.
+// Validate and submit in the background so visitors stay on the portfolio.
 (() => {
   const form = document.getElementById('contactForm');
   if (!form) return;
   const button = document.getElementById('submitBtn');
   const status = document.getElementById('formStatus');
+  const success = document.getElementById('formSuccess');
   const originalButton = button.innerHTML;
   const fields = [
     [form.elements.name, document.getElementById('nameErr'), value => value.length >= 2],
@@ -13,17 +14,17 @@
   // Without this script, HTML required/minlength validation still works.
   form.noValidate = true;
   let submitting = false;
-  let resetTimer;
   function resetButton() {
-    clearTimeout(resetTimer);
     submitting = false;
     button.disabled = false;
     button.innerHTML = originalButton;
   }
   window.addEventListener('pageshow', resetButton);
-  form.addEventListener('submit', event => {
-    if (submitting) { event.preventDefault(); return; }
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (submitting) return;
     status.hidden = true;
+    success.style.display = 'none';
     let firstInvalid;
     fields.forEach(([field, error, valid]) => {
       const invalid = !valid(field.value.trim());
@@ -54,9 +55,32 @@
     source.value = location.origin + location.pathname;
     submitting = true;
     button.disabled = true;
-    button.textContent = 'Opening secure form…';
-    // Leave the normal POST intact. FormSubmit handles the submission result.
-    // Recover the control if navigation is cancelled without clearing the message.
-    resetTimer = setTimeout(resetButton, 15000);
+    button.textContent = 'Sending…';
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
+    try {
+      const endpoint = new URL(form.action);
+      endpoint.pathname = '/ajax' + endpoint.pathname;
+      const response = await fetch(endpoint.href, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        signal: controller.signal
+      });
+      const result = await response.json();
+      if (!response.ok || (result.success !== true && result.success !== 'true')) {
+        throw new Error('Submission was not accepted');
+      }
+      form.reset();
+      success.style.display = 'block';
+    } catch (error) {
+      status.textContent = error.name === 'AbortError'
+        ? 'The request timed out, so we could not confirm submission. Your message is still here. Please try again later or email me directly.'
+        : 'We could not confirm submission. Your message is still here. Please try again or email me directly at prominancefungurayi7@gmail.com.';
+      status.hidden = false;
+    } finally {
+      clearTimeout(timeout);
+      resetButton();
+    }
   });
 })();
