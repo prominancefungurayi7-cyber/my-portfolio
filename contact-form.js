@@ -67,9 +67,25 @@
         body: JSON.stringify(Object.fromEntries(new FormData(form))),
         signal: controller.signal
       });
-      const result = await response.json();
+      let result;
+      try {
+        result = await response.json();
+      } catch {
+        status.textContent = 'The email service returned an unexpected response (HTTP ' + response.status + '). Your message has been kept. Please try again later.';
+        status.hidden = false;
+        return;
+      }
       if (!response.ok || (result.success !== true && result.success !== 'true')) {
-        throw new Error('Submission was not accepted');
+        const reason = typeof result.message === 'string' ? result.message : 'Submission was not accepted (HTTP ' + response.status + ').';
+        status.textContent = 'Email service: ' + reason + ' Your message has been kept.';
+        status.hidden = false;
+        return;
+      }
+      // Acceptance can still require the recipient to activate their form.
+      if (typeof result.message === 'string' && /activat|confirm.*email|verify.*email/i.test(result.message)) {
+        status.textContent = 'Email service: ' + result.message + ' Your message has been kept until email setup is confirmed.';
+        status.hidden = false;
+        return;
       }
       form.reset();
       success.style.display = 'block';
