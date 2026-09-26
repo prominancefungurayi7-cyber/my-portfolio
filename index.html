@@ -1101,7 +1101,6 @@
           <input type="hidden" name="_captcha"  value="false">
           <input type="hidden" name="_subject"  value="New Portfolio Message!">
           <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_next"     value="YOUR_THANK_YOU_PAGE_URL_HERE">
           <div class="contact-form">
             <div class="form-row">
               <div class="form-group">
@@ -1333,7 +1332,16 @@
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
     btn.disabled  = true;
  
-    fetch(this.action, { method: 'POST', body: new FormData(this), headers: { 'Accept': 'application/json' } })
+    // Preserve the configured recipient and use FormSubmit's AJAX endpoint.
+    const endpoint = new URL(this.action);
+    endpoint.pathname = '/ajax/' + endpoint.pathname.replace(/^\/(ajax\/)?/, '');
+    fetch(endpoint.href, { method: 'POST', body: new FormData(this), headers: { 'Accept': 'application/json' } })
+      .then(async response => {
+        const result = await response.json();
+        if (!response.ok || !(result.success === true || result.success === 'true')) {
+          throw new Error('FormSubmit did not accept the message.');
+        }
+      })
       .then(() => {
         btn.innerHTML = '<i class="fas fa-check"></i> Sent!';
         document.getElementById('formSuccess').style.display = 'block';
