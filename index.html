@@ -623,6 +623,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="enhancements.css">
+  <noscript><style>#loader { display: none; } .reveal { opacity: 1; transform: none; }</style></noscript>
 </head>
 <body>
 <canvas id="network-world" aria-hidden="true"></canvas>
@@ -1097,20 +1098,20 @@
  
       <!-- RIGHT: form -->
       <div>
-        <form id="contactForm" action="https://formsubmit.co/prominancefungurayi7@gmail.com" method="POST" novalidate>
-          <input type="hidden" name="_captcha"  value="false">
+        <form id="contactForm" action="https://formsubmit.co/prominancefungurayi7@gmail.com" method="POST">
+          <input type="hidden" name="_captcha"  value="true">
           <input type="hidden" name="_subject"  value="New Portfolio Message!">
           <input type="hidden" name="_template" value="table">
           <div class="contact-form">
             <div class="form-row">
               <div class="form-group">
                 <label for="fname">Name *</label>
-                <input type="text"  id="fname"    name="name"    placeholder="Prominance Fungurayi">
+                <input type="text"  id="fname"    name="name" required minlength="2" autocomplete="name" aria-describedby="nameErr" placeholder="Prominance Fungurayi">
                 <span class="field-error" id="nameErr">Please enter your name.</span>
               </div>
               <div class="form-group">
                 <label for="femail">Email *</label>
-                <input type="email" id="femail"   name="email"   placeholder="prominancefungurayi7@gmail.com">
+                <input type="email" id="femail"   name="email" required autocomplete="email" aria-describedby="emailErr" placeholder="prominancefungurayi7@gmail.com">
                 <span class="field-error" id="emailErr">Please enter a valid email.</span>
               </div>
             </div>
@@ -1126,9 +1127,10 @@
             </div>
             <div class="form-group">
               <label for="fmessage">Message *</label>
-              <textarea id="fmessage" name="message" placeholder="Lets talk..."></textarea>
+              <textarea id="fmessage" name="message" required minlength="5" aria-describedby="msgErr" placeholder="Lets talk..."></textarea>
               <span class="field-error" id="msgErr">Please enter a message (at least 5 characters).</span>
             </div>
+            <p id="formStatus" role="alert" hidden></p>
             <div class="form-success" id="formSuccess">✓ Thank you for contacting me. Will get back to you within 24 hours!</div>
             <button type="submit" class="submit-btn" id="submitBtn">
               <i class="fas fa-paper-plane"></i> Send Message
@@ -1309,58 +1311,8 @@
     });
   });
  
-  /* ── CONTACT FORM VALIDATION ─────────────────────────── */
-  document.getElementById('contactForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    let valid = true;
-    const fname  = document.getElementById('fname');
-    const femail = document.getElementById('femail');
-    const fmsg   = document.getElementById('fmessage');
-    const nErr   = document.getElementById('nameErr');
-    const eErr   = document.getElementById('emailErr');
-    const mErr   = document.getElementById('msgErr');
- 
-    [fname, femail, fmsg].forEach(f => f.classList.remove('error'));
-    [nErr, eErr, mErr].forEach(e => e.classList.remove('show'));
- 
-    if (fname.value.trim().length < 2)                                    { fname.classList.add('error');  nErr.classList.add('show'); valid = false; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(femail.value.trim()))          { femail.classList.add('error'); eErr.classList.add('show'); valid = false; }
-    if (fmsg.value.trim().length < 5)                                     { fmsg.classList.add('error');   mErr.classList.add('show'); valid = false; }
-    if (!valid) return;
- 
-    const btn = document.getElementById('submitBtn');
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-    btn.disabled  = true;
- 
-    // Preserve the configured recipient and use FormSubmit's AJAX endpoint.
-    const endpoint = new URL(this.action);
-    endpoint.pathname = '/ajax/' + endpoint.pathname.replace(/^\/(ajax\/)?/, '');
-    fetch(endpoint.href, { method: 'POST', body: new FormData(this), headers: { 'Accept': 'application/json' } })
-      .then(async response => {
-        const result = await response.json();
-        if (!response.ok || !(result.success === true || result.success === 'true')) {
-          throw new Error('FormSubmit did not accept the message.');
-        }
-      })
-      .then(() => {
-        btn.innerHTML = '<i class="fas fa-check"></i> Sent!';
-        document.getElementById('formSuccess').style.display = 'block';
-        this.reset();
-        setTimeout(() => {
-          btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-          btn.disabled  = false;
-          document.getElementById('formSuccess').style.display = 'none';
-        }, 4000);
-      })
-      .catch(() => {
-        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-        btn.disabled  = false;
-        alert('Something went wrong. Please email me directly at prominancefungurayi7@gmail.com');
-      });
-  });
- 
-
 </script>
 <script src="network-world.js"></script>
+<script src="contact-form.js"></script>
 </body>
 </html>
