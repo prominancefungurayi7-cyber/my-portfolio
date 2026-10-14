@@ -55,8 +55,12 @@ nav.scrolled, [data-theme="light"] nav.scrolled { background: color-mix(in srgb,
 .about-grid { gap: 5rem; }
 .about-img-frame { max-width: 350px; border-radius: 24px; box-shadow: 18px 18px 0 -1px var(--bg2), 18px 18px 0 0 var(--border-hover); }
 .about-img-frame { perspective: 1000px; }
-.about-img-frame img { animation: profile-turn 5s linear infinite; }
-@keyframes profile-turn { to { transform: rotateY(360deg); } }
+.about-img-frame img { animation: profile-motion 6s ease-in-out infinite; }
+@keyframes profile-motion {
+  0%, 40%, 83.333% { transform: scale(1) rotateY(0deg); }
+  20%, 60% { transform: scale(1.035) rotateY(0deg); }
+  100% { transform: scale(1) rotateY(360deg); }
+}
 .about-badge { right: 0; bottom: 0; border-radius: 16px 0 0 0; padding: 16px 24px; }
 .about-text p { font-size: .96rem; }
 strong { color: var(--text); }
