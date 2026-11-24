@@ -7,9 +7,9 @@
   --glow: 0 16px 56px rgba(36,159,197,.12);
 }
 [data-theme="light"] {
-  --bg: #f2f7fc; --bg2: #e8f0f8; --bg3: #dce8f4; --card: #fff;
-  --accent: #007d91; --accent2: #5362c8; --text: #10263e;
-  --text2: #435d77; --text3: #526c86; --border: rgba(44,87,126,.16);
+  --bg: #cad7e3; --bg2: #c0cfdd; --bg3: #b6c8d8; --card: #dce5ed;
+  --accent: #005969; --accent2: #3e4aa1; --text: #10263e;
+  --text2: #304b63; --text3: #3d5770; --border: rgba(44,87,126,.24);
   --border-hover: rgba(0,125,145,.45);
 }
 body { cursor: auto; background: var(--bg); -webkit-font-smoothing: antialiased; }
