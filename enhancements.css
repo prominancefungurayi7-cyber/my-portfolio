@@ -79,6 +79,7 @@ strong { color: var(--text); }
 .projects-filter { gap: 8px; flex-wrap: wrap; }
 .filter-btn { border-radius: 9px; padding: 9px 22px; font-family: var(--font-head); }
 .project-card { display: flex; flex-direction: column; }
+.project-card .project-img { flex-shrink: 0; }
 .project-img { height: 180px; background-color: var(--bg3); background-image: radial-gradient(ellipse at 50% 90%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 65%), linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: auto, 28px 28px, 28px 28px; border-bottom: 1px solid var(--border); }
 .project-img > i { color: var(--accent); filter: drop-shadow(0 0 18px color-mix(in srgb, var(--accent) 30%, transparent)); transition: transform .5s; }
 .project-card:hover .project-img > i { transform: translateY(-5px) scale(1.08); }
@@ -88,6 +89,13 @@ strong { color: var(--text); }
 .project-body p { line-height: 1.85; }
 .project-links { margin-top: auto; padding-top: 18px; }
 .project-link { color: var(--accent); }
+.project-links button.project-link { background: none; border: 0; font-family: inherit; padding: 0; cursor: pointer; }
+.demo-dialog { position: fixed; inset: 0; margin: auto; width: min(60rem, calc(100% - 2rem)); max-height: calc(100% - 2rem); padding: 1rem; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 16px; }
+.demo-dialog::backdrop { background: #000b; }
+.demo-dialog header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+.demo-dialog h2 { font-size: 1.125rem; }
+.demo-dialog button { width: 2.75rem; height: 2.75rem; color: inherit; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; }
+.demo-dialog video { display: block; width: 100%; max-height: 75vh; background: #000; border-radius: 8px; }
 .timeline-item { padding-bottom: 3.5rem; }
 .timeline-item h3 { font-size: 1.2rem; }
 .testimonial-card { padding: 30px; }
