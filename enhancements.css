@@ -87,9 +87,34 @@ strong { color: var(--text); }
 .project-body { flex: 1; display: flex; flex-direction: column; padding: 26px; }
 .project-body h3 { font-size: 1.25rem; font-weight: 500; letter-spacing: -.025em; }
 .project-body p { line-height: 1.85; }
-.project-links { margin-top: auto; padding-top: 18px; }
-.project-link { color: var(--accent); }
-.project-links button.project-link { background: none; border: 0; font-family: inherit; padding: 0; cursor: pointer; }
+.project-links { margin-top: auto; padding-top: 18px; gap: 12px; }
+.project-links .project-link {
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--border-hover);
+  border-radius: 8px;
+  background: var(--bg3);
+  color: var(--accent);
+  font-family: inherit;
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+  cursor: pointer;
+}
+.project-links .project-link:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--bg);
+}
+.project-links .project-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.project-links .project-link i { flex-shrink: 0; }
 .demo-dialog { position: fixed; inset: 0; margin: auto; width: min(60rem, calc(100% - 2rem)); max-height: calc(100% - 2rem); padding: 1rem; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 16px; }
 .demo-dialog::backdrop { background: #000b; }
 .demo-dialog header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
