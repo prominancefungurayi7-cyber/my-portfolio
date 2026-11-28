@@ -826,6 +826,7 @@
       <button class="filter-btn" data-filter="backend">Backend</button>
       <button class="filter-btn" data-filter="mobile">Mobile</button>
       <button class="filter-btn" data-filter="fintech">FinTech</button>
+      <button class="filter-btn" data-filter="ai">AI</button>
     </div>
     <div class="projects-grid reveal">
 
@@ -841,7 +842,7 @@
         </div>
       </div>
 
-      <div class="project-card" data-demo="demos/interview-coach-pro.mp4" data-category="web">
+      <div class="project-card" data-demo="demos/interview-coach-pro.mp4" data-category="web ai">
         <div class="project-img"><i class="fas fa-user-tie"></i><span class="project-badge">Web</span></div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">Django</span><span class="project-tag">HTML</span><span class="project-tag">CSS</span><span class="project-tag">JavaScript</span></div>
@@ -866,7 +867,7 @@
         </div>
       </div>
 
-      <div class="project-card" data-demo="demos/pro-brainy-ai.mp4" data-category="backend web">
+      <div class="project-card" data-demo="demos/pro-brainy-ai.mp4" data-category="backend web ai">
         <div class="project-img"><i class="fas fa-laptop-code"></i><span class="project-badge">Backend · Web</span></div>
         <div class="project-body">
           <div class="project-tags"><span class="project-tag">Flask</span><span class="project-tag">SQLAlchemy</span><span class="project-tag">JWT</span><span class="project-tag">Bootstrap</span></div>
@@ -878,7 +879,7 @@
         </div>
       </div>
 
-      <div class="project-card" data-demo="demos/stanpro-aml.mp4" data-category="fintech">
+      <div class="project-card" data-demo="demos/stanpro-aml.mp4" data-category="fintech ai">
         <div class="project-img">
           <i class="fas fa-user-shield"></i>
           <span class="project-badge">FinTech</span>
@@ -1372,7 +1373,7 @@
       this.classList.add('active');
       const f = this.dataset.filter;
       document.querySelectorAll('.project-card').forEach(card => {
-        card.style.display = (f === 'all' || (card.dataset.category || '').includes(f)) ? '' : 'none';
+        card.style.display = (f === 'all' || card.dataset.category?.split(/\s+/).includes(f)) ? '' : 'none';
       });
     });
   });
